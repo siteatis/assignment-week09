@@ -1,3 +1,5 @@
+new info: as i feared, deploy failed due to a mystery TS error (implicit any, not banned in tsconfig.json so don't know why, tried to add any but it said unexpected any, tried giving it a type but then the map() fails as not present on the type, can't add the map as it'd be self-referential to the type it was being declared in. i'm sure the answer is very, very simple as i can't find anything on google to suggest a possible cause, which IME usually means that it's so basic that nobody would ever ask the question in those terms; i think you probably have to have more than a cursory understanding of TS to know what's happening here, so i've given up and changed that page from tsx to jsx). but i don't really have any time left now so i won't be able to get that ui component added. not sure where i'd have put it anyway, as i don't have any client components in this app yet.
+
 # intermediate push, very bare-bones, not quite MVP yet and a few things not working properly, but need to make sure it deploys OK in good time
 
 So far:

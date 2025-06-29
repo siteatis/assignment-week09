@@ -12,7 +12,7 @@ export default async function HomePage() {
       <Suspense fallback={"Please wait, loading user list..."}>
         <ul>
           {users.map((x) => (
-            <Link key={x.clerk_id} href={`/user/${x.username}`} className="m-4">
+            <Link key={x.clerk_id} href={`/user/${x.username}`} className="p-4">
               <p>
                 Member {x.username} joined {asDateTime(x.stamp)}
               </p>
