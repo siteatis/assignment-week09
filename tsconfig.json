@@ -30,7 +30,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/signup/createProfile/page.jsx"
+    "src/app/signup/createProfile/page.jsx",
+    "src/app/page.jsx"
   ],
   "exclude": ["node_modules"]
 }
