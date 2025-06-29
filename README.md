@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# intermediate push, very bare-bones, not quite MVP yet and a few things not working properly, but need to make sure it deploys OK in good time
 
-## Getting Started
+So far:
 
-First, run the development server:
+# Notes
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. CLERK
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Sign up (username) & log in securely and edit profile, log out
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. NOTFOUND
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Error/not found page if visit nonexistent page
 
-## Learn More
+3. MOTION
 
-To learn more about Next.js, take a look at the following resources:
+- modern UI components, eg Radix UI primitive or similar, for nicer interface
+- See notepad & https://techeducators.moodlecloud.com/mod/assign/view.php?id=6242
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+A) USER PROFILE PAGE
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Check user logged in and allow to edit their profile (username fixed, change password & bio, S: show user stats)
+- Route such as user/[userId]
+- Create new post
+- S: prompt on login if bio left blank
 
-## Deploy on Vercel
+B) HOME PAGE
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Logged in state (always shows in header) and option to log out or sign up
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+C) NOTFOUND PAGE
+
+- With suitable settings and link back to homepage (S: or user profile if logged in)
+- TODO: See if I need a separate one for the leaf pages or if it falls upwards
+- See Notepad & Moodle: https://techeducators.moodlecloud.com/mod/assign/view.php?id=6240
+
+D) PROFILE PAGE
+
+- Based on which user is logged in, else no access.
+- Shows bio and the user's posts.
+- S: User can edit/delete own post (edit on dynamic route (“/posts/[id]/edit”) or by creating a modal).
+
+E) S: GLOBAL TIMELINE
+
+- S: show all posts so anyone can view and click thru to that user's profile
+- SS: let posts be public/users
+
+F) PLUMBING
+
+- Customise clerk with imported route matcher?
+
+X) STYLES
+
+- use 1+ radix ui cmpt or similar
+
+# Assets (DB)
+
+wk9profiles (username VARCHAR(40) PRIMARY KEY, clerk_id TEXT NOT NULL UNIQUE,
+stamp TIMESTAMP NOT NULL DEFAULT now(), bio TEXT)
+wk9posts (id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY, clerk_id TEXT NOT NULL,
+stamp TIMESTAMP DEFAULT now(), subject VARCHAR(255) NOT NULL,
+content TEXT,
+FOREIGN KEY (clerk_id) REFERENCES wk9profiles(clerk_id))
+
+INSERT INTO wk9posts (clerk_id,subject,content) VALUES (
+(SELECT clerk_id FROM wk9profiles WHERE username='alice'), 'First Post', 'Content of First Post');
+INSERT INTO wk9posts (clerk_id,subject,content) VALUES (
+(SELECT clerk_id FROM wk9profiles WHERE username='alice'), 'My Second Post, by Alice', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis nulla magna, dignissim laoreet ante elementum in. Nam malesuada arcu quis odio viverra porttitor. Suspendisse eu pretium diam. Duis aliquam nisl a quam aliquam congue. Etiam consectetur nibh nec ex sodales feugiat. Nullam malesuada enim quis est tincidunt dictum. Ut.');
+INSERT INTO wk9posts (clerk_id,subject,content) VALUES (
+(SELECT clerk_id FROM wk9profiles WHERE username='barry'), 'I didn''t copy this post off Alice', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis nulla magna, dignissim laoreet ante elementum in. Nam malesuada arcu quis odio viverra porttitor. Suspendisse eu pretium diam. Duis aliquam nisl a quam aliquam congue. Etiam consectetur nibh nec ex sodales feugiat. Nullam malesuada enim quis est tincidunt dictum. Ut.');
+
+# Assets (text)
+
+What is there to say about Alice? Well, no description would be complete without mentioning that lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis nulla magna, dignissim laoreet ante elementum in. Nam malesuada arcu quis odio viverra porttitor. Suspendisse eu pretium diam. Duis aliquam nisl a quam aliquam congue. Etiam consectetur nibh nec ex sodales feugiat. Nullam malesuada enim quis est tincidunt dictum. Ut. And that's really as much as we can tell you about Alice without, just, like, totally blowing your mind.
+
+Barry's biography. Barry has a biography full of biographical information. Barry's biography full of biographical information, is full of biographical information from his biography. His biography, full of biographical information, also is full of biographical information from his biography.
+
+Barry likes posting so much that he's decided to do it again, and this time directly, instead of through the SQL editor on Supabase.
+
+Barry is pleased that his post worked first time with no bugs and immediately appeared on the page. He's going to go and snoop at other users' profiles now.
+
+# Reflection
+
+Please also provide an assignment reflection in your project README.md file.
+
+Required
+🎯 What requirements did you achieve?
+🎯 Were there any requirements or goals that you were unable to achieve?
+🎯 If so, what was it that you found difficult about these tasks?
+Optional
+🏹 Feel free to add any other reflections you would like to share about your submission, for example:
+
+Requesting feedback about a specific part of your submission.
+What useful external sources helped you complete the assignment (e.g Youtube tutorials)?
+What errors or bugs did you encounter while completing your assignment? How did you solve them?
+What went really well and what could have gone better?
